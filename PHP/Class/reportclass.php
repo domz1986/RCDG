@@ -99,6 +99,7 @@
               echo "<td>".$total_run."</td>";
               $perc_labor =round($row['Labor2']/($row['Labor']/100),2);
               echo "<td>".$perc_labor." %</td>";
+
               $perc_material=round($row['Materials']/($row['Materials2']/100),2);
               echo "<td>".$perc_material." %</td>";
               $perc_total=round($total_run/($row['Total']/100),2);

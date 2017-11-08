@@ -236,7 +236,7 @@ function check_addrow()
 }
 function addSubCon()
 {
-  
+
     var projCode =  $('#aps_projectname').dropdown('get value');
     var engName = document.getElementById('name').value;
     var work = document.getElementById('work').value;
@@ -287,7 +287,7 @@ function addrowtoTable()
 {
   if(check_addrow())
   {
-      $('#aps_typedc').addClass("disabled");
+    $('#aps_typedc').addClass("disabled");
 
      var table = document.getElementById("t_ind").appendChild(document.createElement('tbody'));
      var row = table.insertRow(table.rows.length);

@@ -179,7 +179,7 @@
 
                   <div class="field">
                     <label class="t-left">Type of Direct Cost</label>
-                    <div class="ui disabled fluid search selection dropdown projectDropDown" id="aps_typedc">
+                    <div class="ui fluid search selection dropdown projectDropDown" id="aps_typedc">
                       <input type="hidden" name="typedc" onchange="check_subcon()">
                       <i class="dropdown icon"></i>
                       <div class="default text">Select Type of Direct Cost</div>

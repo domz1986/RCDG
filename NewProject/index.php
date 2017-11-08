@@ -69,6 +69,7 @@
       <div class="fourteen wide grey-1 column">
         <div class="ui fluid container">
           <center>
+
             <h1 class="h1 mt">Project Details</h1>
 
             <div class="ui divider d-1"></div>
@@ -197,20 +198,18 @@
               </thead>
             </table>
             <!-- add new button -->
-            <div class ="row">
-              <div class="col-sm-10">
-                <form onsubmit="return false">
-                  <input class="button" style="float: left" type="button" value="ADD ROW" onclick="addrowtotable()">
-                </form>
+
+            <div class="mar-1 fields">
+              <div class="ui fluid container">
+
+                  <input class="ui deny button" style="float: left" type="button" value="Add Row" onclick="addrowtotable()">
+                  <input class="ui f-right blue-1 button" style="float: right" type="button" value="Save Project" onclick="savethisboq()">
+
               </div>
             </div>
-            <!--SAVE-->
-            <div class ="row">
-              <div class="col-sm-11">
-                <form onsubmit="return false">
-                <input class="button" style="float: right" type="button" value="SAVE" onclick="savethisboq()">
-                </form>
-              </div>
+
+
+
             </div>
 
 
