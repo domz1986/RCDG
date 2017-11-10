@@ -102,8 +102,8 @@
                 <tr>
                   <th contenteditable="false">Item No.</th>
                   <th contenteditable="false">Description</th>
-                  <th contenteditable="false">Quantity</th>
                   <th contenteditable="false">Unit</th>
+                  <th contenteditable="false">Quantity</th>
                   <th contenteditable="false">Unit Cost</th>
                   <th contenteditable="false">Total Cost</th>
                 </tr>

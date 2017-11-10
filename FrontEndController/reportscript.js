@@ -12,11 +12,17 @@ function loadDataOnload()
 function label_date()
 {
   var l_date = $('#rep_date').val();
+  var s_date = $('#s_rep_date').val();
   var arr = l_date.split("-");
+  var arr1 = s_date.split("-");
   var months = ['','January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   var month = months[Number(arr[1])];
+  var month1 = months[Number(arr1[1])];
+  $('#slabel_date').html(month1+" "+arr1[2]+", "+arr1[0]);
   $('#label_date').html(month+" "+arr[2]+", "+arr[0]);
+  $('#slabel_date1').html(month1+" "+arr1[2]+", "+arr1[0]);
   $('#label_date1').html(month+" "+arr[2]+", "+arr[0]);
+  $('#slabel_date2').html(month1+" "+arr1[2]+", "+arr1[0]);
   $('#label_date2').html(month+" "+arr[2]+", "+arr[0]);
 }
 
@@ -98,12 +104,15 @@ function generate_report()
 {
   label_date();
   var rep_type = $('#rep_type').dropdown('get value');
+  var s_date_report = $('#s_rep_date').val();
   var date_report = $('#rep_date').val();
   var projectCode = $('#aps_projectname').dropdown('get value');
 
  //OVER ALL REPORT
   if(rep_type==1)
   {
+    var ep = document.getElementById("empty_proj");
+    ep.setAttribute("style","visibility:hidden");
     var div = document.getElementById('Overall');
     div.setAttribute("style","visibility:visible");
     var div = document.getElementById('SubCon');
@@ -113,7 +122,7 @@ function generate_report()
     $.ajax({
       url:"../PHP/BackEndController/reportcontroller.php",
       type:"POST",
-      data:{func: 1,wdate:date_report},
+      data:{func: 1,wdate:date_report,wsdate:s_date_report},
       success: function(resultdata){
         //alert(resultdata);
         $('#overall_tbody').html(resultdata);
@@ -124,6 +133,8 @@ function generate_report()
   } // SUBCON PROGRESS REPORT
   else if(rep_type==2)
   {
+    var ep = document.getElementById("empty_proj");
+    ep.setAttribute("style","visibility:hidden");
     var div = document.getElementById('Overall');
     div.setAttribute("style","display:none");
     var div = document.getElementById('SubCon');
@@ -134,7 +145,7 @@ function generate_report()
     $.ajax({
       url:"../PHP/BackEndController/reportcontroller.php",
       type:"POST",
-      data:{func: 2,wdate:date_report},
+      data:{func: 2,wdate:date_report,wsdate:s_date_report},
       success: function(resultdata){
     //    alert(resultdata);
         $('#subcon_tbody').html(resultdata);
@@ -162,7 +173,7 @@ function generate_report()
         $.ajax({
           url:"../PHP/BackEndController/reportcontroller.php",
           type:"POST",
-          data:{func: 3,wdate:date_report,pcode:projectCode},
+          data:{func: 3,wdate:date_report,pcode:projectCode,wsdate:s_date_report},
           success: function(resultdata){
         //    alert(resultdata);
             $('#withdrawal_tbody').html(resultdata);
@@ -179,6 +190,7 @@ function open_report_win()
   var store = new Array();
   store[0] = $('#rep_date').val();
   store[1] = $('#rep_type').dropdown('get value');
+  store[2] = $('#s_rep_date').val();
   sessionStorage.setItem("sent", store);
 
   window.open('../ReportModule/Reports/overallReport.php','_blank');
@@ -188,6 +200,7 @@ function open_report_win1()
   var store = new Array();
   store[0] = $('#rep_date').val();
   store[1] = $('#rep_type').dropdown('get value');
+  store[2] = $('#s_rep_date').val();
   sessionStorage.setItem("sent", store);
 
   window.open('../ReportModule/Reports/SubConReport.php','_blank');
@@ -198,6 +211,7 @@ function open_report_win2()
   store[0] = $('#rep_date').val();
   store[1] = $('#rep_type').dropdown('get value');
   store[2] = $('#aps_projectname').dropdown('get value');
+  store[3] = $('#s_rep_date').val();
   sessionStorage.setItem("sent", store);
 
   window.open('../ReportModule/Reports/WithdrawalReport.php','_blank');

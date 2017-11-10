@@ -109,8 +109,17 @@
 
                     <div class="field">
                       <label class="t-left"> Date of Report Coverage</label>
-                      <div class="ui input">
-                        <input type="date" id="rep_date">
+                      <div class="two fields">
+                        <div class="field">
+                          <div class="ui input">
+                            <input type="date" id="s_rep_date">
+                          </div>
+                        </div>
+                        <div class="field">
+                        <div class="ui input">
+                          <input type="date" id="rep_date">
+                        </div>
+                        </div>
                       </div>
                     </div>
                     <div class="field">
@@ -132,7 +141,7 @@
             <div class="ui top attached segment d-1" id="Overall" style="display:none">
               <div class="ui form">
                 <h3>Over All Project Costing</h3>
-                  <label>as of <label id="label_date"></label></label>
+                  <label>from <label id="slabel_date"></label> to <label id="label_date"></label></label>
                     <table class="ui celled structured table" id='subcon_table'>
                     <thead>
                         <tr>
@@ -172,7 +181,7 @@
             <div class="ui top attached segment d-1" id="SubCon" style="display:none">
               <div class="ui form">
                 <h3>Sub-Contractors Progress Billings</h3>
-                  <label>Actual Billings as of <label id="label_date1"></label></label>
+                  <label>Actual Billings from <label id="slabel_date1"></label> to <label id="label_date1"></label></label>
                     <table class="ui celled structured table" id='subcon_table2'>
                     <thead>
                         <tr>
@@ -214,7 +223,7 @@
             <div class="ui top attached segment d-1" id="withdrawal_rep" style="display:none">
               <div class="ui form">
                 <h3>Withdrawal Details of Project Code </h3><h3 id="proj_code"></h3>
-                  <label>Actual Billings as of <label id="label_date2"></label></label>
+                  <label>Actual Billings from <label id="slabel_date2"></label> to <label id="label_date2"></label></label>
                     <table class="ui celled structured table" id='withdrawal_table'>
                     <thead>
                         <tr>

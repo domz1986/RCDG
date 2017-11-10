@@ -22,7 +22,7 @@
           <h3>Over All Project Costing</h3>
           <div id="rep_date" style="display:none"></div>
           <div id="rep_type" style="display:none"></div>
-            <label>as of <label id="label_date"></label></label>
+            <label>from <label id="slabel_date"></label> to <label id="label_date"></label></label>
               <table class="ui celled structured table" id='subcon_table'>
               <thead>
                   <tr>
@@ -60,8 +60,9 @@
               var arr = a.split(",")
               $('#rep_date').html(arr[0]);
               $('#rep_type').html(arr[1]);
-              label_date2(arr[0]);
-              generate_report(arr[0],arr[1]);
+              $('#s_rep_type').html(arr[2]);
+              label_date2(arr[0],arr[2]);
+              generate_report(arr[0],arr[1],1,arr[2]);
           });
       </script>
   </body>

@@ -123,8 +123,8 @@
                 <tr>
                   <th>Item No.</th>
                   <th>Description</th>
-                  <th>Quantity</th>
                   <th>Unit</th>
+                  <th>Quantity</th>
                   <th>Unit Cost</th>
                   <th>Total Cost</th>
                 </tr>

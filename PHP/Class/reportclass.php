@@ -15,6 +15,9 @@
       $this->w_date = $w_DATE;
     }
 
+    public function set_wsdate($ws_DATE){
+      $this->ws_date = $ws_DATE;
+    }
     public function set_wdate_start($w_sDATE){
       $this->w_date_start = $w_sDATE;
     }
@@ -31,15 +34,15 @@
       $sql = "SELECT projectCode as pCode,
       (SELECT SUM(boqTotalCost) FROM `tblbillofqnty` WHERE projectCode = pCode) as ContractAmnt,
       (SELECT SUM(subconConAmnt)+SUM(subconMatAmnt) FROM tblsubcon where projectCode = pCode) AS Subcon_contract,
-      (SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '1' AND projectCODE = pCode AND w_date<='".$this->w_date."') AS RUNNING_MATERIAL, (";
-      $sql2 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '4' AND projectCODE = pCode AND w_Date<='".$this->w_date."') AS RUNNING_SUBCON, (";
-      $sql3 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '3' AND projectCODE = pCode AND w_Date<='".$this->w_date."') AS RUNNING_EQUIPMENT, (";
-      $sql4 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '2' AND projectCODE = pCode AND w_Date<='".$this->w_date."') AS RUNNING_LABOR, (";
-      $sql5 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '5' AND projectCODE = pCode AND w_Date<='".$this->w_date."') AS RUNNING_UTILITIES, (";
-      $sql6 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '6' AND projectCODE = pCode AND w_Date<='".$this->w_date."') AS RUNNING_OTHERS,(";
-      $sql7 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '7' AND projectCODE = pCode AND w_Date<='".$this->w_date."') AS RUNNING_POS FROM `tblproject` WHERE projectStatus = 1";
+      (SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '1' AND projectCODE = pCode AND w_date<='".$this->w_date."' AND w_Date>='".$this->ws_date."') AS RUNNING_MATERIAL, (";
+      $sql2 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '4' AND projectCODE = pCode AND w_Date<='".$this->w_date."' AND w_Date>='".$this->ws_date."') AS RUNNING_SUBCON, (";
+      $sql3 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '3' AND projectCODE = pCode AND w_Date<='".$this->w_date."' AND w_Date>='".$this->ws_date."') AS RUNNING_EQUIPMENT, (";
+      $sql4 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '2' AND projectCODE = pCode AND w_Date<='".$this->w_date."' AND w_Date>='".$this->ws_date."') AS RUNNING_LABOR, (";
+      $sql5 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '5' AND projectCODE = pCode AND w_Date<='".$this->w_date."' AND w_Date>='".$this->ws_date."') AS RUNNING_UTILITIES, (";
+      $sql6 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '6' AND projectCODE = pCode AND w_Date<='".$this->w_date."' AND w_Date>='".$this->ws_date."') AS RUNNING_OTHERS,(";
+      $sql7 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '7' AND projectCODE = pCode AND w_Date<='".$this->w_date."' AND w_Date>='".$this->ws_date."') AS RUNNING_POS FROM `tblproject` WHERE projectStatus = 1";
       $result = $con->query($sql.$sql2.$sql3.$sql4.$sql5.$sql6.$sql7);
-      //return $sql.$sql2.$sql3.$sql4.$sql5.$sql6.$sql7;
+    //  return $sql.$sql2.$sql3.$sql4.$sql5.$sql6.$sql7;
       if($result->num_rows > 0)
       {
           while($row = $result->fetch_assoc())
@@ -76,9 +79,9 @@
       SubconMatAmnt as Materials, subconID as scsID, (subconConAmnt+SubconMatAmnt) as Total,
       (SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_indTYPE = 4 AND projectCode = pCode AND
       (SELECT w_ID from tblindividual WHERE subconID = scsID AND subconTYPE = 'Labor') = w_ID AND
-      w_DATE<='".$this->w_date."') as Labor2, (SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_indTYPE = 4 AND
+      w_DATE<='".$this->w_date."' AND w_DATE>='".$this->ws_date."') as Labor2, (SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_indTYPE = 4 AND
       projectCode = pCode AND (SELECT w_ID from tblindividual WHERE subconID = scsID AND subconTYPE = 'Materials')
-      = w_ID AND w_DATE<='".$this->w_date."') as Materials2  FROM tblsubcon ORDER BY `pCode` ASC";
+      = w_ID AND w_DATE<='".$this->w_date."' AND w_DATE>='".$this->ws_date."') as Materials2  FROM tblsubcon ORDER BY `pCode` ASC";
       $result = $con->query($sql);
       //return $sql;
       if($result->num_rows > 0)
@@ -136,7 +139,7 @@
   {
     include("../connection.php");
 
-    $sql = "SELECT w_ID,w_date, w_Name, w_IndTYPE, w_totalAMNT, w_Description FROM `tblwithdrawal` WHERE projectCODE='".$this->p_code."' AND  w_DATE<='".$this->w_date."'  ORDER BY w_DATE ASC";
+    $sql = "SELECT w_ID,w_date, w_Name, w_IndTYPE, w_totalAMNT, w_Description FROM `tblwithdrawal` WHERE projectCODE='".$this->p_code."' AND  w_DATE<='".$this->w_date."' AND  w_DATE>='".$this->ws_date."'  ORDER BY w_DATE ASC";
     $type = array("","Materials","Labor","Equipment","Sub-Contractors","Utilities","Others","POS");
     $result = $con->query($sql);
     //return $sql;

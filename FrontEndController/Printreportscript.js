@@ -17,13 +17,17 @@ function label_date()
   var month = months[Number(arr[1])];
   $('#label_date').html(month+" "+arr[2]+", "+arr[0]);
 }
-function label_date2(date)
+function label_date2(date,sdate)
 {
+  var s_date = sdate;
   var l_date = date;
+  var arr1 = s_date.split("-");
   var arr = l_date.split("-");
   var months = ['','January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var month1 = months[Number(arr1[1])];
   var month = months[Number(arr[1])];
   $('#label_date').html(month+" "+arr[2]+", "+arr[0]);
+  $('#slabel_date').html(month1+" "+arr1[2]+", "+arr1[0]);
   //generate_report();
 }
 
@@ -90,7 +94,7 @@ function loadProjectsToDropBox()
   });
 
 }
-function generate_report(date_report, rep_type, projectCode)
+function generate_report(date_report, rep_type, projectCode,sdate_report)
 {
   //alert(date_report+"entraw"+rep_type);
   if(rep_type==1)
@@ -99,7 +103,7 @@ function generate_report(date_report, rep_type, projectCode)
     $.ajax({
       url:"../../PHP/BackEndController/reportcontroller.php",
       type:"POST",
-      data:{func: 1,wdate:date_report},
+      data:{func: 1,wdate:date_report,wsdate:sdate_report},
       success: function(resultdata){
       //  alert(resultdata);
         $('#overall_tbody').html(resultdata);
@@ -114,7 +118,7 @@ function generate_report(date_report, rep_type, projectCode)
     $.ajax({
       url:"../../PHP/BackEndController/reportcontroller.php",
       type:"POST",
-      data:{func: 2,wdate:date_report},
+      data:{func: 2,wdate:date_report,wsdate:sdate_report},
       success: function(resultdata){
 
         $('#subcon_tbody').html(resultdata);
@@ -129,7 +133,7 @@ function generate_report(date_report, rep_type, projectCode)
     $.ajax({
       url:"../../PHP/BackEndController/reportcontroller.php",
       type:"POST",
-      data:{func: 3,wdate:date_report,pcode:projectCode},
+      data:{func: 3,wdate:date_report,pcode:projectCode,wsdate:sdate_report},
       success: function(resultdata){
     //    alert(resultdata);
         $('#withdrawal_tbody').html(resultdata);
