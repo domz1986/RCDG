@@ -107,7 +107,7 @@ function generate_report()
   var s_date_report = $('#s_rep_date').val();
   var date_report = $('#rep_date').val();
   var projectCode = $('#aps_projectname').dropdown('get value');
-
+  var filter_text = $('#filter').val();
  //OVER ALL REPORT
   if(rep_type==1)
   {
@@ -122,7 +122,7 @@ function generate_report()
     $.ajax({
       url:"../PHP/BackEndController/reportcontroller.php",
       type:"POST",
-      data:{func: 1,wdate:date_report,wsdate:s_date_report},
+      data:{func: 1,wdate:date_report,wsdate:s_date_report,filter:filter_text},
       success: function(resultdata){
         //alert(resultdata);
         $('#overall_tbody').html(resultdata);
@@ -145,7 +145,7 @@ function generate_report()
     $.ajax({
       url:"../PHP/BackEndController/reportcontroller.php",
       type:"POST",
-      data:{func: 2,wdate:date_report,wsdate:s_date_report},
+      data:{func: 2,wdate:date_report,wsdate:s_date_report,filter:filter_text},
       success: function(resultdata){
     //    alert(resultdata);
         $('#subcon_tbody').html(resultdata);
@@ -173,7 +173,7 @@ function generate_report()
         $.ajax({
           url:"../PHP/BackEndController/reportcontroller.php",
           type:"POST",
-          data:{func: 3,wdate:date_report,pcode:projectCode,wsdate:s_date_report},
+          data:{func: 3,wdate:date_report,pcode:projectCode,wsdate:s_date_report,filter:filter_text},
           success: function(resultdata){
         //    alert(resultdata);
             $('#withdrawal_tbody').html(resultdata);
@@ -191,6 +191,7 @@ function open_report_win()
   store[0] = $('#rep_date').val();
   store[1] = $('#rep_type').dropdown('get value');
   store[2] = $('#s_rep_date').val();
+  store[4] = $('#filter').val();
   sessionStorage.setItem("sent", store);
 
   window.open('../ReportModule/Reports/overallReport.php','_blank');
@@ -201,6 +202,8 @@ function open_report_win1()
   store[0] = $('#rep_date').val();
   store[1] = $('#rep_type').dropdown('get value');
   store[2] = $('#s_rep_date').val();
+  store[4] = $('#filter').val();
+
   sessionStorage.setItem("sent", store);
 
   window.open('../ReportModule/Reports/SubConReport.php','_blank');
@@ -212,6 +215,7 @@ function open_report_win2()
   store[1] = $('#rep_type').dropdown('get value');
   store[2] = $('#aps_projectname').dropdown('get value');
   store[3] = $('#s_rep_date').val();
+  store[4] = $('#filter').val();
   sessionStorage.setItem("sent", store);
 
   window.open('../ReportModule/Reports/WithdrawalReport.php','_blank');

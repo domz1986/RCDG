@@ -17,6 +17,7 @@
     $overallReport = new reportClass();
     $overallReport->set_wdate($_POST['wdate']);
     $overallReport->set_wsdate($_POST['wsdate']);
+    $overallReport->set_filter($_POST['filter']);
     echo $overallReport->generate_OverallReport();
     break;
 
@@ -24,6 +25,7 @@
     $subconReport = new reportClass();
     $subconReport->set_wdate($_POST['wdate']);
     $subconReport->set_wsdate($_POST['wsdate']);
+    $subconReport->set_filter($_POST['filter']);
     echo $subconReport->generate_SubconReport();
     break;
 
@@ -32,6 +34,7 @@
     $withdrawalReport->set_pcode($_POST['pcode']);
     $withdrawalReport->set_wdate($_POST['wdate']);
     $withdrawalReport->set_wsdate($_POST['wsdate']);
+    $withdrawalReport->set_filter($_POST['filter']);
     echo $withdrawalReport->generate_WithdrawalReport();
     break;
 
@@ -40,6 +43,7 @@
     $withdrawalload->set_pcode($_POST['pcode']);
     $withdrawalload->set_wdate($_POST['wdate']);
     $withdrawalload->set_wdate_start($_POST['swdate']);
+    $overallReport->set_filter($_POST['filter']);
     echo $withdrawalload->generate_WithdrawalLoad();
     break;
 

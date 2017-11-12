@@ -104,6 +104,8 @@
                         <div class="menu" id="loadprojectname"></div>
                       </div>
                     </div>
+
+
                   </div>
                   <div class="two fields">
 
@@ -128,11 +130,27 @@
                       </div>
                     </div>
                   </div>
-                  <div class="mar-1 fields">
-                    <div class="ui fluid container">
-                      <button class="ui f-right blue-1 button" onclick="generate_report()">Generate Report</button>
+                  <div class="two fields">
+
+                    <div class="field">
+                      <label class="t-left"> Filter Text</label>
+                      <div class="two fields">
+
+                        <div class="field">
+                          <input type="text" placeholder="Input Filter Text" id="filter">
+                        </div>
+                          <div class="mar-1 fields">
+                            <div class="ui fluid container">
+                              <button class="ui f-right blue-1 button" onclick="generate_report()">Generate Report</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                     </div>
+
                   </div>
+
 
               </div>
             </div>

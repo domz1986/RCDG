@@ -21,6 +21,7 @@
         <center>
           <div id="rep_date" style="display:none"></div>
           <div id="rep_type" style="display:none"></div>
+          <div id="filter" style="display:none"></div>
           <div id="aps_projectname" style="display:none"></div>
           <h3>Withdrawal Details of Project Code </h3><h3 id="proj_code"></h3>
             <label>Actual Withdrawals from <label id="slabel_date"></label> to <label id="label_date"></label></label>
@@ -48,8 +49,9 @@
               $('#rep_type').html(arr[1]);
               $('#aps_projectname').html(arr[2]);
               $('#s_rep_date').html(arr[3]);
+              $('#filter').html(arr[4]);
               label_date2(arr[0],arr[3]);
-              generate_report(arr[0],arr[1],arr[2],arr[3]);
+              generate_report(arr[0],arr[1],arr[2],arr[3],arr[4]);
           });
       </script>
   </body>

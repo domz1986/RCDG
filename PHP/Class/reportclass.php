@@ -5,6 +5,7 @@
     private $p_code;
     private $w_date;
     private $w_date_start;
+    private $filter;
     private $p_status;
 
     public function set_pcode($p_CODE){
@@ -22,6 +23,10 @@
       $this->w_date_start = $w_sDATE;
     }
 
+    public function set_filter($filter_t)
+    {
+      $this->filter=$filter_t;
+    }
     public function set_pstatus($p_STATUS)
     {
       $this->sc_status = $p_STATUS;
@@ -40,9 +45,9 @@
       $sql4 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '2' AND projectCODE = pCode AND w_Date<='".$this->w_date."' AND w_Date>='".$this->ws_date."') AS RUNNING_LABOR, (";
       $sql5 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '5' AND projectCODE = pCode AND w_Date<='".$this->w_date."' AND w_Date>='".$this->ws_date."') AS RUNNING_UTILITIES, (";
       $sql6 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '6' AND projectCODE = pCode AND w_Date<='".$this->w_date."' AND w_Date>='".$this->ws_date."') AS RUNNING_OTHERS,(";
-      $sql7 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '7' AND projectCODE = pCode AND w_Date<='".$this->w_date."' AND w_Date>='".$this->ws_date."') AS RUNNING_POS FROM `tblproject` WHERE projectStatus = 1";
+      $sql7 = "SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '7' AND projectCODE = pCode AND w_Date<='".$this->w_date."' AND w_Date>='".$this->ws_date."') AS RUNNING_POS FROM `tblproject` WHERE projectStatus = 1 AND projectCode LIKE '%".$this->filter."%'";
       $result = $con->query($sql.$sql2.$sql3.$sql4.$sql5.$sql6.$sql7);
-    //  return $sql.$sql2.$sql3.$sql4.$sql5.$sql6.$sql7;
+  //    return $sql.$sql2.$sql3.$sql4.$sql5.$sql6.$sql7;
       if($result->num_rows > 0)
       {
           while($row = $result->fetch_assoc())
@@ -68,7 +73,7 @@
       }
       else
       {
-          return "Statement failed: ". $sql->error . " <br> ".$con->error;
+          //return "Statement failed: ". $sql->error . " <br> ".$con->error;
       }
     }
     function generate_SubconReport()
@@ -81,7 +86,7 @@
       (SELECT w_ID from tblindividual WHERE subconID = scsID AND subconTYPE = 'Labor') = w_ID AND
       w_DATE<='".$this->w_date."' AND w_DATE>='".$this->ws_date."') as Labor2, (SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_indTYPE = 4 AND
       projectCode = pCode AND (SELECT w_ID from tblindividual WHERE subconID = scsID AND subconTYPE = 'Materials')
-      = w_ID AND w_DATE<='".$this->w_date."' AND w_DATE>='".$this->ws_date."') as Materials2  FROM tblsubcon ORDER BY `pCode` ASC";
+      = w_ID AND w_DATE<='".$this->w_date."' AND w_DATE>='".$this->ws_date."') as Materials2  FROM tblsubcon WHERE (projectCode LIKE '%".$this->filter."%' OR subconEngr LIKE '%".$this->filter."%' OR subconWork LIKE '%".$this->filter."%' OR 'scsID' LIKE '%".$this->filter."%') ORDER BY `pCode` ASC";
       $result = $con->query($sql);
       //return $sql;
       if($result->num_rows > 0)
@@ -132,14 +137,14 @@
     }
     else
     {
-        return "Statement failed: ". $sql->error . " <br> ".$con->error;
+      //  return "Statement failed: ". $sql->error . " <br> ".$con->error;
     }
   }
   function generate_WithdrawalReport()
   {
     include("../connection.php");
 
-    $sql = "SELECT w_ID,w_date, w_Name, w_IndTYPE, w_totalAMNT, w_Description FROM `tblwithdrawal` WHERE projectCODE='".$this->p_code."' AND  w_DATE<='".$this->w_date."' AND  w_DATE>='".$this->ws_date."'  ORDER BY w_DATE ASC";
+    $sql = "SELECT w_ID,w_date, w_Name, w_IndTYPE, w_totalAMNT, w_Description FROM `tblwithdrawal` WHERE projectCODE='".$this->p_code."' AND  w_DATE<='".$this->w_date."' AND  w_DATE>='".$this->ws_date."'  AND (w_Name LIKE '%".$this->filter."%' OR w_Description like '%".$this->filter."%')ORDER BY w_DATE ASC";
     $type = array("","Materials","Labor","Equipment","Sub-Contractors","Utilities","Others","POS");
     $result = $con->query($sql);
     //return $sql;

@@ -94,16 +94,16 @@ function loadProjectsToDropBox()
   });
 
 }
-function generate_report(date_report, rep_type, projectCode,sdate_report)
+function generate_report(date_report, rep_type, projectCode,sdate_report,filter_text)
 {
-  //alert(date_report+"entraw"+rep_type);
+  //alert("entraw"+filter_text);
   if(rep_type==1)
   {
 
     $.ajax({
       url:"../../PHP/BackEndController/reportcontroller.php",
       type:"POST",
-      data:{func: 1,wdate:date_report,wsdate:sdate_report},
+      data:{func: 1,wdate:date_report,wsdate:sdate_report,filter:filter_text},
       success: function(resultdata){
       //  alert(resultdata);
         $('#overall_tbody').html(resultdata);
@@ -118,7 +118,7 @@ function generate_report(date_report, rep_type, projectCode,sdate_report)
     $.ajax({
       url:"../../PHP/BackEndController/reportcontroller.php",
       type:"POST",
-      data:{func: 2,wdate:date_report,wsdate:sdate_report},
+      data:{func: 2,wdate:date_report,wsdate:sdate_report,filter:filter_text},
       success: function(resultdata){
 
         $('#subcon_tbody').html(resultdata);
@@ -133,7 +133,7 @@ function generate_report(date_report, rep_type, projectCode,sdate_report)
     $.ajax({
       url:"../../PHP/BackEndController/reportcontroller.php",
       type:"POST",
-      data:{func: 3,wdate:date_report,pcode:projectCode,wsdate:sdate_report},
+      data:{func: 3,wdate:date_report,pcode:projectCode,wsdate:sdate_report,filter:filter_text},
       success: function(resultdata){
     //    alert(resultdata);
         $('#withdrawal_tbody').html(resultdata);

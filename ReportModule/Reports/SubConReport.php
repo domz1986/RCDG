@@ -22,6 +22,7 @@
           <h3>Sub-Contractors Progress Billings</h3>
           <div id="rep_date" style="display:none"></div>
           <div id="rep_type" style="display:none"></div>
+          <div id="filter" style="display:none"></div>
             <label>Actual Billings from <label id="slabel_date"></label> to <label id="label_date"></label></label>
               <table class="ui celled structured table" id='subcon_table2'>
               <thead>
@@ -63,8 +64,9 @@
               $('#rep_date').html(arr[0]);
               $('#rep_type').html(arr[1]);
               $('#s_rep_type').html(arr[2]);
+              $('#filter').html(arr[4]);
               label_date2(arr[0],arr[2]);
-              generate_report(arr[0],arr[1],2,arr[2]);
+              generate_report(arr[0],arr[1],2,arr[2],arr[4]);
           });
       </script>
   </body>
