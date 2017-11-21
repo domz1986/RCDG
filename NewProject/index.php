@@ -92,7 +92,22 @@
                 </tr>
               </tbody>
             </table>
-
+            <table class="ui single line table d-1" id="t_cost" class="table" contenteditable="true">
+              <thead>
+                <tr>
+                  <th contenteditable="false">Material Cost</th>
+                  <th contenteditable="false">Equipment Cost</th>
+                  <th contenteditable="false">Labor Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
             <h1 class="h1">Bill Of Quantities</h1>
 
             <div class="ui divider td-1"></div>

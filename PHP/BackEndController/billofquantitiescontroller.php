@@ -14,6 +14,9 @@
       $saveproject->setprojectCode($_POST['pcode']);
       $saveproject->setprojectEngr($_POST['pengr']);
       $saveproject->setprojectCost($_POST['pconcost']);
+      $saveproject->setmatCost($_POST['costM']);
+      $saveproject->setequipCost($_POST['costE']);
+      $saveproject->setlaborCost($_POST['costL']);
       echo $saveproject->saveproject();
     break;
 

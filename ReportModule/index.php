@@ -165,15 +165,30 @@
                         <tr>
                           <th class="center aligned sorted ascending" rowspan="3">Projects</th>
                           <th class="center aligned" rowspan="3">Contract Amount</th>
-                          <th class="center aligned" colspan="2">In-house Contract</th>
+                          <th class="center aligned" colspan="4">In-house Contract</th>
                           <th class="center aligned" colspan="8">Running Total</th>
+                          <th class="center aligned" colspan="4">Percentage</th>
+                          <th class="center aligned" rowspan="3">Percentage per Contract</th>
+                          <th class="center aligned" colspan="4">Remaining Balance</th>
+                          <th class="center aligned" rowspan="3">Remaining Balance per Contract</th>
+                          <th class="center aligned" rowspan="3">Remarks</th>
                         </tr>
                         <tr>
                          <th class="center aligned" rowspan="2">Material</th>
                          <th class="center aligned" rowspan="2">Sub-Con</th>
+                         <th class="center aligned" rowspan="2">Equipment</th>
+                         <th class="center aligned" rowspan="2">Labor</th>
                          <th class="center aligned" colspan="4">Direct Cost</th>
                          <th class="center aligned" colspan="3">Indirect Cost</th>
                          <th class="center aligned" rowspan="2">Total</th>
+                         <th class="center aligned" rowspan="2">Material</th>
+                         <th class="center aligned" rowspan="2">Sub-Con</th>
+                         <th class="center aligned" rowspan="2">Equipment</th>
+                         <th class="center aligned" rowspan="2">Labor</th>
+                         <th class="center aligned" rowspan="2">Material</th>
+                         <th class="center aligned" rowspan="2">Sub-Con</th>
+                         <th class="center aligned" rowspan="2">Equipment</th>
+                         <th class="center aligned" rowspan="2">Labor</th>
                        </tr>
                        <tr>
                          <th class="center aligned">Material</th>

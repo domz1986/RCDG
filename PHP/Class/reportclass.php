@@ -36,7 +36,7 @@
     {
       include("../connection.php");
 
-      $sql = "SELECT projectCode as pCode,
+      $sql = "SELECT projectCode as pCode, projectname, projectCost, MaterialCost, EquipmentCost, LaborCost,
       (SELECT SUM(boqTotalCost) FROM `tblbillofqnty` WHERE projectCode = pCode) as ContractAmnt,
       (SELECT SUM(subconConAmnt)+SUM(subconMatAmnt) FROM tblsubcon where projectCode = pCode) AS Subcon_contract,
       (SELECT SUM(w_totalAMNT) FROM tblwithdrawal WHERE w_IndTYPE = '1' AND projectCODE = pCode AND w_date<='".$this->w_date."' AND w_Date>='".$this->ws_date."') AS RUNNING_MATERIAL, (";
@@ -54,10 +54,12 @@
           {
             echo "<tr>";
 
-              echo "<td>".$row['pCode']."</td>";
-              echo "<td>".round($row['ContractAmnt'],2)."</td>";
-              echo "<td></td>";
+              echo "<td>".$row['projectname']."</td>";
+              echo "<td>".round($row['projectCost'],2)."</td>"; //previously ContractAmnt
+              echo "<td>".$row['MaterialCost']."</td>";
               echo "<td>".$row['Subcon_contract']."</td>";
+              echo "<td>".$row['EquipmentCost']."</td>";
+              echo "<td>".$row['LaborCost']."</td>";
               echo "<td>".$row['RUNNING_MATERIAL']."</td>";
               echo "<td>".$row['RUNNING_SUBCON']."</td>";
               echo "<td>".$row['RUNNING_EQUIPMENT']."</td>";
@@ -67,6 +69,27 @@
               echo "<td>".$row['RUNNING_POS']."</td>";
               $total = $row['RUNNING_POS']+$row['RUNNING_OTHERS']+$row['RUNNING_UTILITIES']+$row['RUNNING_LABOR']+$row['RUNNING_EQUIPMENT']+$row['RUNNING_SUBCON']+$row['RUNNING_MATERIAL'];
               echo "<td>".$total."</td>";
+              $matperc = round((100/$row['MaterialCost'])*$row['RUNNING_MATERIAL']);
+              echo "<td>".$matperc." %</td>";
+              $subperc = round((100/$row['Subcon_contract'])*$row['RUNNING_SUBCON']);
+              echo "<td>".$subperc." %</td>";
+              $equipperc = round((100/$row['EquipmentCost'])*$row['RUNNING_EQUIPMENT']);
+              echo "<td>".$equipperc." %</td>";
+              $laborperc = round((100/$row['LaborCost'])*$row['RUNNING_LABOR']);
+              echo "<td>".$laborperc." %</td>";
+              $totalperc = round((100/round($row['ContractAmnt'],2))*$total);
+              echo "<td>".$totalperc." %</td>";
+              $remmat = $row['MaterialCost']-$row['RUNNING_MATERIAL'];
+              echo "<td>".$remmat." </td>";
+              $remsub = $row['Subcon_contract']-$row['RUNNING_SUBCON'];
+              echo "<td>".$remsub." </td>";
+              $remequip = $row['EquipmentCost']-$row['RUNNING_EQUIPMENT'];
+              echo "<td>".$remequip." </td>";
+              $remlabor = $row['LaborCost']-$row['RUNNING_LABOR'];
+              echo "<td>".$remlabor." </td>";
+              $rembal = $row['projectCost']-$total;
+              echo "<td>".$rembal." </td>";
+              echo "<td> </td>";
             echo "</tr>";
 
           }

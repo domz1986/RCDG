@@ -46,11 +46,14 @@ function savethisboq(){
 
   var table = document.getElementById("t_boq");//boq table
   var table_proj = document.getElementById("t_project");//project table
-
+  var table_cost = document.getElementById("t_cost");//project cost
   var projectname = table_proj.rows[1].cells[0].innerHTML;
   var projectcode = table_proj.rows[1].cells[1].innerHTML;
   var projectengr = table_proj.rows[1].cells[2].innerHTML;
   var projectconcost = table_proj.rows[1].cells[3].innerHTML;
+  var cost_M = table_cost.rows[1].cells[0].innerHTML;
+  var cost_E = table_cost.rows[1].cells[1].innerHTML;
+  var cost_L = table_cost.rows[1].cells[2].innerHTML;
 
   //------------project info
 
@@ -59,9 +62,9 @@ function savethisboq(){
     url: "../PHP/BackEndController/billofquantitiescontroller.php",
     type: "POST",
     data: {func: 1, pname: projectname, pcode: projectcode, pengr: projectengr,
-           pconcost: projectconcost},
+           pconcost: projectconcost, costM:cost_M, costE:cost_E, costL:cost_L},
     success: function(resultdata){
-    //alert(resultdata);
+    alert(resultdata);
       if($.trim(resultdata) == 1){
         //------------boq entry
 
@@ -163,6 +166,10 @@ function loadProjectDetails(){
 
         document.getElementById('pv_engr').value = info[0];
         document.getElementById('pv_concost').value = info[1];
+        document.getElementById('matcost').value = info[4];
+        document.getElementById('equipcost').value = info[5];
+        document.getElementById('laborcost').value = info[6];
+
         loadBOQToTable();
 
       }

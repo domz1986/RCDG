@@ -111,6 +111,23 @@
                     <input type="text" placeholder="Project Code" id="pv_code" readonly>
                   </div>
                 </div>
+                <div class="two fields">
+                  <div class="field">
+                    <label class="t-left">Material Cost</label>
+                    <input type="text" placeholder="Material Cost" id="matcost" readonly>
+                  </div>
+
+                  <div class="field">
+                    <label class="t-left">Equipment Cost</label>
+                    <input type="text" placeholder="Equipment Code" id="equipcost" readonly>
+                  </div>
+                </div>
+                <div class="two fields">
+                  <div class="field">
+                    <label class="t-left">Labor Cost</label>
+                    <input type="text" placeholder="Labor Cost" id="laborcost" readonly>
+                  </div>
+                </div>
               </form>
             </div>
 

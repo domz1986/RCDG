@@ -7,6 +7,9 @@
     private $projectName;
     private $projectCost;
     public $projectEngr;
+    private $matCost;
+    private $equipCost;
+    private $laborCost;
 
     public function setprojectID($id){
       $this->projectID = $id;
@@ -28,6 +31,18 @@
       $this->projectEngr = $engr;
     }
 
+    public function setmatCost($mCost){
+      $this->matCost = $mCost;
+    }
+
+    public function setequipCost($eCost){
+      $this->equipCost = $eCost;
+    }
+
+    public function setlaborCost($lCost){
+      $this->laborCost = $lCost;
+    }
+
     public function ProjectClass(){
 
     }
@@ -36,9 +51,9 @@
 
       include("../connection.php");
 
-      $sql = "INSERT INTO tblproject (`projectCode`, `projectName`, `projectCost`, `projectEngr`)
+      $sql = "INSERT INTO tblproject (`projectCode`, `projectName`, `projectCost`, `projectEngr`, `MaterialCost`, `EquipmentCost`, `LaborCost`)
                     VALUES ('$this->projectCode','$this->projectName','$this->projectCost',
-                      '$this->projectEngr')";
+                      '$this->projectEngr','$this->matCost','$this->equipCost','$this->laborCost')";
 
 
       $con->query($sql);
@@ -85,7 +100,7 @@
 
       $result = $con->query($sql);
       $row = $result->fetch_assoc();
-      $productinfo = $row['projectEngr']."=".$row['projectCost']."=".$row['projectName']."=".$row['projectID'];
+      $productinfo = $row['projectEngr']."=".$row['projectCost']."=".$row['projectName']."=".$row['projectID']."=".$row['MaterialCost']."=".$row['EquipmentCost']."=".$row['LaborCost'];
 
       return $productinfo;
 
