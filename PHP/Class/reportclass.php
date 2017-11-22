@@ -89,7 +89,7 @@
               echo "<td>".$remlabor." </td>";
               $rembal = $row['projectCost']-$total;
               echo "<td>".$rembal." </td>";
-              echo "<td> </td>";
+              echo "<td contentEditable='true'></td>";
             echo "</tr>";
 
           }
@@ -163,14 +163,31 @@
       //  return "Statement failed: ". $sql->error . " <br> ".$con->error;
     }
   }
+
   function generate_WithdrawalReport()
   {
-    include("../connection.php");
+    function find_type($str)
+    {
+      if($str==null)
+        $str=" ";
+      $type = array("","materials","labor","equipment","sub-contractors","utilities","others","pos");
+      for($i=1;$i<8;$i++)
+      {
 
-    $sql = "SELECT w_ID,w_date, w_Name, w_IndTYPE, w_totalAMNT, w_Description FROM `tblwithdrawal` WHERE projectCODE='".$this->p_code."' AND  w_DATE<='".$this->w_date."' AND  w_DATE>='".$this->ws_date."'  AND (w_Name LIKE '%".$this->filter."%' OR w_Description like '%".$this->filter."%')ORDER BY w_DATE ASC";
+        $pos = strpos($type[$i],$str);
+    //    echo $str." ".$type[$i]." = ".strlen($pos)." / ";
+        if(strlen($pos) > 0)
+        {
+          return $i;
+        }
+      }
+      return "";
+    }
+    include("../connection.php");
     $type = array("","Materials","Labor","Equipment","Sub-Contractors","Utilities","Others","POS");
+    $sql = "SELECT w_ID,w_date, w_Name, w_IndTYPE, w_totalAMNT, w_Description FROM `tblwithdrawal` WHERE projectCODE='".$this->p_code."' AND  w_DATE<='".$this->w_date."' AND  w_DATE>='".$this->ws_date."'  AND (w_Name LIKE '%".$this->filter."%' OR w_Description like '%".$this->filter."%' OR w_IndTYPE like '".find_type($this->filter)."')ORDER BY w_DATE ASC";
     $result = $con->query($sql);
-    //return $sql;
+  //  return $sql;
     if($result->num_rows > 0)
     {
         while($row = $result->fetch_assoc())

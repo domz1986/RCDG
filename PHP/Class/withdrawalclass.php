@@ -121,11 +121,36 @@
             echo "<h4> <div class='inline field'><b>".$row['B']."</b> <div class='ui blue basic label'>".$percent
             ."% </div> </div> </h4>";
             echo "<div class='bar-wrap'><span class='bar-fill' style='width: ".$percent."%;'></span></div>";
-
+            echo "<div style='background-color:white;color:black;padding:30px;'>";
+            echo "<h4> <i class='list layout icon'></i> BOQ Unit Details</h4>";
+            echo "<table class='ui very basic collapsing celled table'>";
+            echo "<thead><th class='two wide'></th><th></th></thead>";
+            echo "<tbody>";
+            echo "<tr><td><b>BOQ Allocated Cost:</b></td><td>".$row['C']."</td></tr>";
+            echo "<tr><td><b>Total Amount:</b></td><td>".$row['total']."</td></tr>";
+            echo "</tbody></table>";
+            echo "</div>";
+            echo "<div style='background-color:white;color:black;padding:30px;'>";
+            echo "Individual Details";
+            echo "<table class='ui small table'>";
+            echo "<thead><tr><th>Particulars</th><th>Unit Cost</th><th>Amount</th><th>Suppliers</th></tr></thead>";
+            echo "<tbody>";
+            $sql2 = "SELECT * FROM tblindividual WHERE boqID LIKE '".$row['id']."'";
+            $result2 = $con->query($sql2);
+            if($result2->num_rows > 0)
+            {
+              while($row2=$result2->fetch_assoc())
+              {
+                echo "<tr><td>".$row2['individual_PARTICULARS']."</td><td>".$row2['individual_UNITCOST']."</td><td>".$row2['individual_AMOUNT']."</td><td>".$row2['individual_SUPPLIER']."</td></tr>";
+              }
+            }
+            echo "</tbody></table>";
+            echo "</div>";
           }
         echo "</ul>";
         echo  "</div>";
         echo  "</div>";
+        echo "<br>";
           //return $line;
       }
       else
