@@ -246,10 +246,26 @@
   }
   function generate_WithdrawalLoad()
   {
-    include("../connection.php");
+    function find_type($str)
+    {
+      if($str==null)
+        $str=" ";
+      $type = array("","materials","labor","equipment","sub-contractors","utilities","others","pos");
+      for($i=1;$i<8;$i++)
+      {
 
-    $sql = "SELECT w_ID,w_date, w_Name, w_IndTYPE, w_totalAMNT, w_Description FROM `tblwithdrawal` WHERE projectCODE='".$this->p_code."' AND  w_DATE<='".$this->w_date."' AND w_DATE>= '".$this->w_date_start."' ORDER BY w_DATE ASC";
+        $pos = strpos($type[$i],$str);
+    //    echo $str." ".$type[$i]." = ".strlen($pos)." / ";
+        if(strlen($pos) > 0)
+        {
+          return $i;
+        }
+      }
+      return "";
+    }
+    include("../connection.php");
     $type = array("","Materials","Labor","Equipment","Sub-Contractors","Utilities","Others","POS");
+    $sql = "SELECT w_ID,w_date, w_Name, w_IndTYPE, w_totalAMNT, w_Description FROM `tblwithdrawal` WHERE projectCODE='".$this->p_code."' AND  w_DATE<='".$this->w_date."' AND  w_DATE>='".$this->ws_date."'  AND (w_Name LIKE '%".$this->filter."%' OR w_Description like '%".$this->filter."%' OR w_IndTYPE like '".find_type($this->filter)."')ORDER BY w_DATE ASC";
     $result = $con->query($sql);
     //return $sql;
     if($result->num_rows > 0)
@@ -259,17 +275,17 @@
             echo "<tr style='outline:thin dotted'>";
             echo "<td style='display:none'>withdrawal</td>";
             echo "<td style='display:none'>".$row['w_ID']."</td>";
-            echo "<td style='display:none'>withdrawal</td>";
+            echo "<td style='display:none'>".$row['w_IndTYPE']."</td>";
             echo "<td style='display:none'>withdrawal</td>";
             echo "<td style='display:none'>withdrawal</td>";
             echo "<td style='display:none'>withdrawal</td>";
             echo "<td style='display:none'>withdrawal</td>";
             echo "<td style='display:none'>withdrawal</td>";
             echo "<td colspan='1'>".$row['w_date']."</td>";
-            echo "<td rowspan='1'>".$type[$row['w_IndTYPE']]."</td>";
+            echo "<td rowspan='1' contenteditable='false'>".$type[$row['w_IndTYPE']]."</td>";
             echo "<td colspan='5'>".$row['w_Description']."</td>";
             echo "<td colspan='3'>".$row['w_Name']."</td>";
-            echo "<td rowspan='1' contentEditable='true' id='total_".$row['w_ID']."'><b>".$row['w_totalAMNT']."</b></td>";
+            echo "<td rowspan='1' contentEditable='true' id='total_".$row['w_ID']."'>".$row['w_totalAMNT']."</td>";
             echo "</tr>";
 
             $sql2 = "SELECT individual_ID, boqID as bq, (SELECT boqItemNo from tblbillofqnty WHERE boqID = bq) as boqin, individual_PARTICULARS, individual_QNTY, individual_UNITCOST, individual_AMOUNT, subconID as sID, subconTYPE, (SELECT subconEngr FROM tblsubcon WHERE subconID = sID) as sbeng, (SELECT subconWork FROM tblsubcon WHERE subconID = sID) as sbwork, (SELECT subconConAmnt FROM tblsubcon WHERE subconID = sID) as sbca, (SELECT subconMatAmnt FROM tblsubcon WHERE subconID = sID) as sbma, individual_SUPPLIER FROM tblindividual WHERE w_ID = '".$row['w_ID']."'";
@@ -280,15 +296,15 @@
               echo "<td style='display:none'></td>";
               echo "<td style='display:none'></td>";
               echo "<td class='center aligned sorted ascending'colspan='1' contentEditable='false'><b>BOQ Item No.</b></td>";
-              echo "<td class='center aligned' rowspan='1'><b>Particulars</b></td>";
-              echo "<td class='center aligned' colspan='1'><b>Subcon TYPE</b></td>";
-              echo "<td class='center aligned' colspan='1'><b>Engr Name</b></td>";
-              echo "<td class='center aligned' colspan='1'><b>Work TYPE</b></td>";
-              echo "<td class='center aligned' colspan='1'><b>Labor Amnt</b></td>";
-              echo "<td class='center aligned' colspan='1'><b>Material Amnt</b></td>";
-              echo "<td class='center aligned' colspan='1'><b>Supplier</b></td>";
-              echo "<td class='center aligned' rowspan='1'><b>Quantity</b></td>";
-              echo "<td class='center aligned' rowspan='1'><b>Unit Cost</b></td>";
+              echo "<td class='center aligned' rowspan='1' contentEditable='false'><b>Particulars</b></td>";
+              echo "<td class='center aligned' colspan='1' contentEditable='false'><b>Subcon TYPE</b></td>";
+              echo "<td class='center aligned' colspan='1' contentEditable='false'><b>Engr Name</b></td>";
+              echo "<td class='center aligned' colspan='1' contentEditable='false'><b>Work TYPE</b></td>";
+              echo "<td class='center aligned' colspan='1' contentEditable='false'><b>Labor Amnt</b></td>";
+              echo "<td class='center aligned' colspan='1' contentEditable='false'><b>Material Amnt</b></td>";
+              echo "<td class='center aligned' colspan='1' contentEditable='false'><b>Supplier</b></td>";
+              echo "<td class='center aligned' rowspan='1' contentEditable='false'><b>Quantity</b></td>";
+              echo "<td class='center aligned' rowspan='1' contentEditable='false'><b>Unit Cost</b></td>";
               echo "<td class='center aligned' rowspan='1' contentEditable='false'><b>Total Cost</b></td>";
               echo "</tr>";
 
@@ -298,10 +314,10 @@
                   echo "<td style='display:none'>".$row['w_ID']."</td>";
                   echo "<td style='display:none'>".$row2['individual_ID']."</td>";
                   echo "<td contentEditable='false'>".$row2['boqin']."</td>";
-                  echo "<td contentEditable='false'>".$row2['individual_PARTICULARS']."</td>";
-                  echo "<td>".$row2['subconTYPE']."</td>";
-                  echo "<td>".$row2['sbeng']."</td>";
-                  echo "<td>".$row2['sbwork']."</td>";
+                  echo "<td>".$row2['individual_PARTICULARS']."</td>";
+                  echo "<td contentEditable='false'>".$row2['subconTYPE']."</td>";
+                  echo "<td contentEditable='false'>".$row2['sbeng']."</td>";
+                  echo "<td contentEditable='false'>".$row2['sbwork']."</td>";
                   echo "<td contentEditable='false'>".$row2['sbca']."</td>";
                   echo "<td contentEditable='false'>".$row2['sbma']."</td>";
                   echo "<td>".$row2['individual_SUPPLIER']."</td>";

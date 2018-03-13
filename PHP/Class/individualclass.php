@@ -93,5 +93,21 @@
       }
 
     }
+    public function editIndividuals()
+    {
+      include("../connection.php");
+      $sql = "UPDATE tblindividual SET
+              individual_PARTICULARS = '".$this->ind_particular."',
+              individual_SUPPLIER = '".$this->ind_supplier."',
+              individual_QNTY = '".$this->ind_quantity."',
+              individual_UNITCOST = '".$this->ind_unitcost."',
+              individual_AMOUNT = '".$this->ind_amount."'
+              WHERE individual_ID = '".$this->ind_id."'";
+
+      echo $sql;
+      $con->query($sql);
+      return 1;
+    }
+
 }
 ?>

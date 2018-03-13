@@ -42,8 +42,8 @@
     $withdrawalload = new reportClass();
     $withdrawalload->set_pcode($_POST['pcode']);
     $withdrawalload->set_wdate($_POST['wdate']);
-    $withdrawalload->set_wdate_start($_POST['swdate']);
-    $overallReport->set_filter($_POST['filter']);
+    $withdrawalload->set_wsdate($_POST['swdate']);
+    $withdrawalload->set_filter($_POST['filter']);
     echo $withdrawalload->generate_WithdrawalLoad();
     break;
 

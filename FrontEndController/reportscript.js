@@ -154,7 +154,7 @@ function generate_report()
 
     });
   }
-  else if(rep_type==3)
+  else if(rep_type==3) //WITHDRAWAL DETAILS
   {
     //alert(projectCode);
       var div = document.getElementById('Overall');

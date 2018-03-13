@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2017 at 11:22 AM
+-- Generation Time: Nov 23, 2017 at 05:11 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -79,7 +79,13 @@ INSERT INTO `tblbillofqnty` (`boqID`, `boqItemNo`, `boqDesc`, `boqUnit`, `boqQnt
 (15, 'TMP-005', 'Unreadable Description 2', 'CU.M.', 919.35, 7856.87, 7223210, 'P-001'),
 (16, 'TMP-006', 'Unreadable Description 3', 'KG.', 16997.8, 72.9, 1239140, 'P-001'),
 (17, 'HFAER', 'pantutuy', 'ER', 235.67, 1, 235.67, 'P-002'),
-(50, 'asd', 'asd', 'sad', 2, 3, 6, 'P-001');
+(50, 'asd', 'asd', 'sad', 2, 3, 6, 'P-001'),
+(51, 'a23', 'sdfsdf', '3', 4, 24, 96, 'a12'),
+(52, 'asdf', '4df', '3', 5, 23, 115, 'a12'),
+(53, 'adfsdfsdfsdf', 'dff', '4', 3, 5, 15, 'a12'),
+(54, '1', '1', '1', 1, 1, 1, '1'),
+(55, '1', '1', '1', 1, 1, 1, '1'),
+(56, '1', '1', '1', 1, 1, 1, '1');
 
 -- --------------------------------------------------------
 
@@ -130,7 +136,8 @@ INSERT INTO `tblindividual` (`individual_ID`, `boqID`, `subconID`, `subconTYPE`,
 ('Ind-10008', 17, 'SC-10002', 'Materials', 23, 'Ga', 2, 46, 'as', 'W-10012', 1),
 ('Ind-10009', 4, '', '', 23, 'asd', 3, 69, 'fsd', 'W-10026', 1),
 ('Ind-10010', 2, 'SC-10001', 'Labor', 2, 'asd', 3, 6, 'asd', 'W-10027', 1),
-('Ind-10011', 17, 'SC-10003', 'Materials', 2, 'asd', 3231, 6462, 'asd', 'W-10028', 1);
+('Ind-10011', 17, 'SC-10003', 'Materials', 2, 'asd', 3231, 6462, 'asd', 'W-10028', 1),
+('Ind-10012', 3, '', '', 4, 'sgdf', 3, 12, 'fsdgfdsg', 'W-10029', 1);
 
 -- --------------------------------------------------------
 
@@ -143,6 +150,9 @@ CREATE TABLE `tblproject` (
   `projectCode` varchar(255) NOT NULL,
   `projectName` varchar(255) NOT NULL,
   `projectCost` float NOT NULL,
+  `MaterialCost` double NOT NULL DEFAULT '0',
+  `EquipmentCost` double NOT NULL DEFAULT '0',
+  `LaborCost` double NOT NULL DEFAULT '0',
   `projectEngr` varchar(255) NOT NULL,
   `projectStatus` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -151,9 +161,10 @@ CREATE TABLE `tblproject` (
 -- Dumping data for table `tblproject`
 --
 
-INSERT INTO `tblproject` (`projectID`, `projectCode`, `projectName`, `projectCost`, `projectEngr`, `projectStatus`) VALUES
-(1, 'P-001', 'Construction of Ayala National Highschool', 5005, 'Engr Rovelyn Jr.', 1),
-(2, 'P-002', 'Test', 2345, 'adfasdf', 1);
+INSERT INTO `tblproject` (`projectID`, `projectCode`, `projectName`, `projectCost`, `MaterialCost`, `EquipmentCost`, `LaborCost`, `projectEngr`, `projectStatus`) VALUES
+(1, 'P-001', 'Construction of Ayala National Highschool', 5005, 23, 251003, 354, 'Engr Rovelyn Jr.', 1),
+(2, 'P-002', 'Test', 2345, 0, 0, 0, 'adfasdf', 1),
+(3, 'a12', 'New project', 5000000, 0, 0, 0, 'domz', 1);
 
 -- --------------------------------------------------------
 
@@ -223,7 +234,8 @@ INSERT INTO `tblwithdrawal` (`w_ID`, `w_TYPE`, `projectCode`, `w_IndTYPE`, `w_to
 ('W-10025', 1, 'P-001', '1', 6, '2017-07-30', 'sad', NULL, 1),
 ('W-10026', 1, 'P-001', '3', 69, '2017-07-31', 'asd', NULL, 1),
 ('W-10027', 1, 'P-001', '4', 6, '2017-07-31', 'asd', 'sdfgfdhfghfgh', 1),
-('W-10028', 1, 'P-002', '4', 6462, '2017-07-25', 'asd', 'vcxzvzxcvzcxv', 1);
+('W-10028', 1, 'P-002', '4', 6462, '2017-07-25', 'asd', 'vcxzvzxcvzcxv', 1),
+('W-10029', 1, 'P-001', '3', 12, '2017-11-09', 'gfdg', NULL, 1);
 
 --
 -- Indexes for dumped tables
@@ -279,7 +291,7 @@ ALTER TABLE `tblwithdrawal`
 -- AUTO_INCREMENT for table `tblbillofqnty`
 --
 ALTER TABLE `tblbillofqnty`
-  MODIFY `boqID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `boqID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 --
 -- AUTO_INCREMENT for table `tblchangelogs`
 --
@@ -289,7 +301,7 @@ ALTER TABLE `tblchangelogs`
 -- AUTO_INCREMENT for table `tblproject`
 --
 ALTER TABLE `tblproject`
-  MODIFY `projectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `projectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -106,7 +106,6 @@
                       </div>
                     </div>
                   </div>
-
                 </div>
                 <div class="four fields" id="dates" style='display:none'>
 
@@ -122,8 +121,16 @@
                       <input type="date" id="date_end">
                     </div>
                   </div>
+                  <div class="field">
+                    <label class="t-left"> Filter Text</label>
+
+                        <input type="text" placeholder="Input Filter Text" id="filter">
+
+                    </div>
 
                 </div>
+
+
 
 
                   <div class="mar-1 fields">
@@ -263,7 +270,7 @@
                         </table>
                         <div class="mar-1 fields">
                           <div class="ui fluid container">
-                            <button class="ui f-right blue-1 button" onclick="">Save All</button>
+                            <button class="ui f-right blue-1 button" onclick="savewithdrawal()">Save All</button>
                           </div>
                         </div>
                   </div>

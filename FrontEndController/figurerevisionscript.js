@@ -157,17 +157,19 @@ function loadSubConTable()
 function loadWithdrawaltable()
 {
     //alert(projectCode);
+
     var projectCode = $('#aps_projectname1').dropdown('get value');
     var date_report = $('#date_end').val();
     var date_start = $('#date_start').val();
+    var filter_text = $('#filter').val();
   //  alert(projectCode+" "+date_start+" "+date_report);
     $.ajax({
       url:"../PHP/BackEndController/reportcontroller.php",
       type:"POST",
-      data:{func: 4,swdate:date_start,wdate:date_report,pcode:projectCode},
+      data:{func: 4,swdate:date_start,wdate:date_report,pcode:projectCode,filter:filter_text},
       success: function(resultdata)
       {
-        // alert(resultdata);
+      //  alert(resultdata);
         $('#withdrawal_tbody').html(resultdata);
       }
     });
@@ -209,7 +211,7 @@ function calcucomplexTotal()
   var withdraw_line="";
   var total_with = 0;
   var i;
-  for(i=1;i<=tables.rows.length;i++)
+  for(i=1;i<=tables.rows.length+1;i++)
   {
     if(tables.rows[i].cells[0].innerHTML=="withdrawal")
     {
@@ -229,6 +231,7 @@ function calcucomplexTotal()
       var tcost = (parseFloat(tables.rows[i].cells[10].innerHTML) * parseFloat(tables.rows[i].cells[11].innerHTML));
       tables.rows[i].cells[12].innerHTML = tcost;
       total_with=total_with+tcost;
+      withdraw_line.innerHTML = total_with;
     }
   }
 }
@@ -255,6 +258,7 @@ function checkEdit()
     var date_start  = $('#date_start').val();
     var date_end = $('#date_end').val();
 
+
     if(proj!="" && rev=="1") //project details
     {
       loadProjectDetails();
@@ -263,7 +267,7 @@ function checkEdit()
       var subcon_field = document.getElementById('subcon_details');
       subcon_field.setAttribute("style","display:none");
       var withdrawal_field = document.getElementById('withdrawal_details');
-      withdrawal_field.setAttribute("style","dsiplay:none");
+      withdrawal_field.setAttribute("style","display:none");
     }
     else if(proj!="" && rev=="2")
     {
@@ -273,7 +277,7 @@ function checkEdit()
       var subcon_field = document.getElementById('subcon_details');
       subcon_field.setAttribute("style","visibility:visible");
       var withdrawal_field = document.getElementById('withdrawal_details');
-      withdrawal_field.setAttribute("style","dsiplay:none");
+      withdrawal_field.setAttribute("style","display:none");
     }
     else if(proj!="" && rev=="3")
     {
@@ -408,6 +412,76 @@ function savethisboq(){
   });
 
 }
+function savewithdrawal()
+{
+
+  var table = document.getElementById("withdrawal_table");//withdrawal table
+  var projCode =  $('#aps_projectname1').dropdown('get value');
+  var i;
+  for(i=1 ; i<table.rows.length-1;i++)
+  {
+        var wtype =table.rows[i].cells[0].innerHTML;
+      //  alert("wtype = "+wtype);
+        if(wtype == "withdrawal")
+        {
+        //  alert("withdrawal ");
+          var w_id =table.rows[i].cells[1].innerHTML;
+          var w_desc =table.rows[i].cells[10].innerHTML;
+          var w_name =table.rows[i].cells[11].innerHTML;
+          var w_date =table.rows[i].cells[8].innerHTML;
+          var total_amnt =table.rows[i].cells[12].innerHTML;
+          $.ajax({
+
+            url: "../PHP/BackEndController/withdrawalcontroller.php",
+            type: "POST",
+            data: {func: 15, wid:w_id, wdesc: w_desc, totalamnt:total_amnt,
+                   wdate: w_date, wname: w_name},
+            success: function(resultdata)
+            {
+            //  alert(resultdata);
+                if($.trim(resultdata) == 1){
+
+              //    alert("Saved Entry!");
+                }
+                else {
+              //    alert("Error Entry!");
+                }
+              }
+            });
+        }
+        else if(wtype!="")
+        {
+        //  alert("individual ");
+          var in_id = table.rows[i].cells[1].innerHTML;
+          var in_par = table.rows[i].cells[3].innerHTML;
+          var in_sup = table.rows[i].cells[9].innerHTML;
+          var in_qnty = table.rows[i].cells[10].innerHTML;
+          var in_unit = table.rows[i].cells[11].innerHTML;
+          var in_amnt = table.rows[i].cells[12].innerHTML;
+          $.ajax({
+
+            url: "../PHP/BackEndController/withdrawalcontroller.php",
+            type: "POST",
+            data: {func: 16, indid:in_id, inpar: in_par, insup:in_sup,
+                   inqnty: in_qnty, inunit: in_unit, inamnt:in_amnt},
+            success: function(resultdata)
+            {
+            //  alert(resultdata);
+                if($.trim(resultdata) == 1){
+
+              //    alert("Saved Entry!");
+                }
+                else {
+              //    alert("Error Entry!");
+                }
+              }
+            });
+        }
+  }
+  alert("Withdrawal Saved!");
+
+}
+
 // graph javascript
 
 $(".menu .item").tab();

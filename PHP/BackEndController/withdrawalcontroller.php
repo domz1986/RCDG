@@ -141,6 +141,27 @@
     $editsubcon->set_scmatamnt($_POST['mcost']);
     echo $editsubcon->editsavesubcon();
     break;
+
+    case 15: //edit withdrawalclass
+    $editwithdrawal = new withdrawalClass();
+    $editwithdrawal->setw_ID($_POST['wid']);
+    $editwithdrawal->setw_DETAILS($_POST['wdesc']);
+    $editwithdrawal->setw_TOTALAMNT($_POST['totalamnt']);
+    $editwithdrawal->setw_DATE($_POST['wdate']);
+    $editwithdrawal->setw_NAME($_POST['wname']);
+    $editwithdrawal->editWithdrawal();
+    break;
+
+    case 16: //edit individuals
+    $editindividual = new individualClass();
+    $editindividual->setind_ID($_POST['indid']);
+    $editindividual->setind_PAR($_POST['inpar']);
+    $editindividual->setind_SUP($_POST['insup']);
+    $editindividual->setind_QNTY($_POST['inqnty']);
+    $editindividual->setind_UNITCOST($_POST['inunit']);
+    $editindividual->setind_AMNT($_POST['inamnt']);
+    echo $editindividual->editIndividuals();
+    break;
 }
 
 ?>

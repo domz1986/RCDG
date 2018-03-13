@@ -84,6 +84,7 @@
             <br><br>
 
             <div class="ui fluid search selection dropdown d-1 projectDropDown" id="aps_projectname">
+              
               <input type="hidden" name="projectname" onchange="loadgraph()">
               <i class="dropdown icon"></i>
               <div class="default text">Project List</div>

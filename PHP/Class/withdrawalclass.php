@@ -186,6 +186,21 @@
       }
 
     }
+    public function editWithdrawal()
+    {
+        include("../connection.php");
+        $sql = "UPDATE tblwithdrawal SET
+                w_totalAMNT = ".$this->w_totalamount.",
+                w_Name = '".$this->w_name."',
+                w_Description = '".$this->w_details."',
+                w_Date = '".$this->w_date."'
+                WHERE w_ID = '".$this->w_id."'";
+
+        //echo $sql;
+        $con->query($sql);
+        return 1;
+
+    }
 
 }
 ?>
